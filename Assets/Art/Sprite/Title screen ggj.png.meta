@@ -1,0 +1,429 @@
+fileFormatVersion: 2
+guid: 97b2c72b78e62fa478c3d05794e637f1
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: 9035036937869234767
+    second: Title screen ggj_0
+  - first:
+      213: 2136691054766783908
+    second: Title screen ggj_1
+  - first:
+      213: 1898265627189409551
+    second: Title screen ggj_2
+  - first:
+      213: -25428312079746901
+    second: Title screen ggj_3
+  - first:
+      213: 7995057774842546490
+    second: Title screen ggj_4
+  - first:
+      213: 5977726510386534908
+    second: Title screen ggj_5
+  - first:
+      213: 5269497015833083078
+    second: Title screen ggj_6
+  - first:
+      213: -2370950909248354351
+    second: Title screen ggj_7
+  - first:
+      213: 1801497732316098253
+    second: Title screen ggj_8
+  - first:
+      213: -855439539253830399
+    second: Title screen ggj_9
+  - first:
+      213: 9198108069868124470
+    second: Title screen ggj_10
+  - first:
+      213: 3325303647493911644
+    second: Title screen ggj_11
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: Title screen ggj_0
+      rect:
+        serializedVersion: 2
+        x: 9
+        y: 348
+        width: 121
+        height: 131
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f429a3ea936e26d70800000000000000
+      internalID: 9035036937869234767
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Title screen ggj_1
+      rect:
+        serializedVersion: 2
+        x: 144
+        y: 358
+        width: 104
+        height: 130
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4adf022913d07ad10800000000000000
+      internalID: 2136691054766783908
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Title screen ggj_2
+      rect:
+        serializedVersion: 2
+        x: 291
+        y: 327
+        width: 100
+        height: 127
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f0775fdc78ef75a10800000000000000
+      internalID: 1898265627189409551
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Title screen ggj_3
+      rect:
+        serializedVersion: 2
+        x: 402
+        y: 334
+        width: 100
+        height: 133
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ba8bf3bb519a5aff0800000000000000
+      internalID: -25428312079746901
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Title screen ggj_4
+      rect:
+        serializedVersion: 2
+        x: 511
+        y: 322
+        width: 99
+        height: 154
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a390734cfa624fe60800000000000000
+      internalID: 7995057774842546490
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Title screen ggj_5
+      rect:
+        serializedVersion: 2
+        x: 637
+        y: 338
+        width: 85
+        height: 122
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: cf95600079625f250800000000000000
+      internalID: 5977726510386534908
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Title screen ggj_6
+      rect:
+        serializedVersion: 2
+        x: 291
+        y: 188
+        width: 38
+        height: 55
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6cc36bded93012940800000000000000
+      internalID: 5269497015833083078
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Title screen ggj_7
+      rect:
+        serializedVersion: 2
+        x: 349
+        y: 190
+        width: 37
+        height: 48
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1d7cc5ab5b0b81fd0800000000000000
+      internalID: -2370950909248354351
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Title screen ggj_8
+      rect:
+        serializedVersion: 2
+        x: 405
+        y: 190
+        width: 32
+        height: 47
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: dce6f5e84a4300910800000000000000
+      internalID: 1801497732316098253
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Title screen ggj_9
+      rect:
+        serializedVersion: 2
+        x: 468
+        y: 189
+        width: 34
+        height: 49
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 10d93f7754ed024f0800000000000000
+      internalID: -855439539253830399
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Title screen ggj_10
+      rect:
+        serializedVersion: 2
+        x: 29
+        y: 34
+        width: 86
+        height: 113
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 639b42e4e8e36af70800000000000000
+      internalID: 9198108069868124470
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Title screen ggj_11
+      rect:
+        serializedVersion: 2
+        x: 135
+        y: 42
+        width: 102
+        height: 112
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c547f279c0ad52e20800000000000000
+      internalID: 3325303647493911644
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: b95f367f13362534cab4514c23d9772f
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      Title screen ggj_0: 9035036937869234767
+      Title screen ggj_1: 2136691054766783908
+      Title screen ggj_10: 9198108069868124470
+      Title screen ggj_11: 3325303647493911644
+      Title screen ggj_2: 1898265627189409551
+      Title screen ggj_3: -25428312079746901
+      Title screen ggj_4: 7995057774842546490
+      Title screen ggj_5: 5977726510386534908
+      Title screen ggj_6: 5269497015833083078
+      Title screen ggj_7: -2370950909248354351
+      Title screen ggj_8: 1801497732316098253
+      Title screen ggj_9: -855439539253830399
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

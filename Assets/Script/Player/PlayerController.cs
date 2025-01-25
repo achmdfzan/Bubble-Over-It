@@ -19,11 +19,14 @@ namespace Bubble
         private Coroutine rightHoldCoroutine;
         private float leftHoldDuration;
         private float rightHoldDuration;
+        public Animator _playerAnimator;
+        public Animator _rocketAnimator;
 
         [Header("Component")]
         [SerializeField] private Rigidbody2D _PlayerRb;
         [SerializeField] private PlayerBubble _playerBubble;
         [SerializeField] private PlayerCamera _playerCamera;
+        [SerializeField] private Transform _playerSprite;
 
         [Header("Slider Mechanic")]
         [SerializeField] private GameObject _sliderPanel;
@@ -102,6 +105,7 @@ namespace Bubble
         #region Movement
         private void StartLeftHold()
         {
+            _playerAnimator.SetBool("isRight", false);
             if (leftHoldCoroutine == null)
             {
                 leftHoldCoroutine = StartCoroutine(HoldLeftButton());
@@ -116,6 +120,8 @@ namespace Bubble
                 Debug.Log("Left button held for: " + leftHoldDuration.ToString("F2") + " seconds");
                 leftHoldDuration = 0;
                 leftHoldCoroutine = null;
+
+                _rocketAnimator.SetTrigger("rocket");
             }
         }
 
@@ -137,6 +143,7 @@ namespace Bubble
 
         private void StartRightHold()
         {
+            _playerAnimator.SetBool("isRight", true);
             if (rightHoldCoroutine == null)
             {
                 rightHoldCoroutine = StartCoroutine(HoldRightButton());
@@ -151,6 +158,8 @@ namespace Bubble
                 rightHoldDuration = 0;
                 Debug.Log("Right button held for: " + rightHoldDuration.ToString("F2") + " seconds");
                 rightHoldCoroutine = null;
+
+                _rocketAnimator.SetTrigger("rocket");
             }
         }
         
@@ -224,11 +233,13 @@ namespace Bubble
                 if(isPlunging)
                     return;
 
+
+                _playerAnimator.SetTrigger("blow");
+
                 ChekingClicker();
             }
             else
             {
-                _PlayerRb.gravityScale = 0;
                 passValue = 0;
                 _passChange = _defaultPassChange + 1; ;
                 isFlying = true;
@@ -315,6 +326,12 @@ namespace Bubble
         {
             if(_sliderIndicator.value >= _sliderBackgroundValue - 10 && _sliderIndicator.value <= _sliderBackgroundValue + 10)
             {
+
+                if(passValue == 0)
+                {
+                    _PlayerRb.gravityScale = 0;
+                }
+
                 _passChange = _defaultPassChange;
                 passValue++;
 

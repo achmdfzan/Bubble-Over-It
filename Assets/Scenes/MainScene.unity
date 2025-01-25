@@ -601,7 +601,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: -7912298583207001778, guid: 160efeefb8be48f46b50116cd3c57b33, type: 3}
+  m_Sprite: {fileID: -7912298583207001778, guid: bfa3dc20607033847a75492da743922c, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -933,6 +933,7 @@ GameObject:
   - component: {fileID: 579128240}
   - component: {fileID: 579128242}
   - component: {fileID: 579128241}
+  - component: {fileID: 579128243}
   m_Layer: 5
   m_Name: Panel
   m_TagString: Untagged
@@ -998,6 +999,20 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 579128239}
   m_CullTransparentMesh: 1
+--- !u!114 &579128243
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 579128239}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 79fcee28d3a6b5f488fe7c1a1d85d3d7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  scaleUpFactor: 1.2
+  animationDuration: 0.5
 --- !u!4 &601823410 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 5866834236831030948, guid: ee0f06857a1f03e4ab58b4211a627ce9, type: 3}
@@ -1702,7 +1717,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 7282461348544508605, guid: 2e9d1abd0bdfbfd4fb9a252763581cc7, type: 3}
+  m_Sprite: {fileID: 7282461348544508605, guid: fe0324d4fedbb134393162c44834fd42, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -3404,10 +3419,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _playerCamera: {fileID: 438577182}
+  _sliderGameobject: {fileID: 579128239}
   _bubbleObject: {fileID: 86145918}
   _speedBubbleValue: 3
   _currentBubbleValue: 0
   vfxBrokenGameobject: {fileID: 931583938849481552, guid: 403d36f2ecdb1ee4f952e05083959350, type: 3}
+  scaleUpFactor: 1.2
+  animationDuration: 0.5
 --- !u!95 &2143611457
 Animator:
   serializedVersion: 7

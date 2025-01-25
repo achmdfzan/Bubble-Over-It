@@ -122,6 +122,7 @@ namespace Bubble
                 leftHoldCoroutine = null;
 
                 _rocketAnimator.SetTrigger("rocket");
+                SfxManager.Instance().PlayRocketExhaustSFX();
             }
         }
 
@@ -135,6 +136,8 @@ namespace Bubble
                 {
                     MovePlayer(leftHoldDuration, false);
                     leftHoldDuration = 0;
+                    _rocketAnimator.SetTrigger("rocket");
+                    SfxManager.Instance().PlayRocketExhaustSFX();
                 }
 
                 yield return null;
@@ -160,6 +163,7 @@ namespace Bubble
                 rightHoldCoroutine = null;
 
                 _rocketAnimator.SetTrigger("rocket");
+                SfxManager.Instance().PlayRocketExhaustSFX();
             }
         }
         
@@ -174,6 +178,8 @@ namespace Bubble
                 {
                     MovePlayer(rightHoldDuration, true);
                     rightHoldDuration = 0;
+                    _rocketAnimator.SetTrigger("rocket");
+                    SfxManager.Instance().PlayRocketExhaustSFX();
                 }
                 yield return null;
             }
@@ -331,6 +337,7 @@ namespace Bubble
                 {
                     _PlayerRb.gravityScale = 0;
                 }
+                SfxManager.Instance().PlayBubbleBlowSFX();
 
                 _passChange = _defaultPassChange;
                 passValue++;
@@ -418,6 +425,7 @@ namespace Bubble
                     _playerCamera.HasGrounded();
 
                     _applyGravityTween.Kill();
+                    SfxManager.Instance().PlayFallSFX();
                 }
             }
         }

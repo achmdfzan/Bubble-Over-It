@@ -45,6 +45,7 @@ namespace Bubble
         {
             AnimateBroken();
             _playerCamera.ZoomOut();
+            SfxManager.Instance().PlayBubblePopSFX();
         }
 
         public void AddBubbleValue()

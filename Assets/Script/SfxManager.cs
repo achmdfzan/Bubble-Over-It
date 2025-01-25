@@ -46,8 +46,9 @@ public class SfxManager : Singleton<SfxManager>
 
     public void PlayRocketExhaustSFX()
     {
-        audioSource.PlayOneShot(rocketExhaustSfx);
+        //audioSource.PlayOneShot(rocketExhaustSfx);
     }
+
 
 
 
@@ -63,6 +64,9 @@ public class SfxManager : Singleton<SfxManager>
         var chosenSfx = malePainSfxs[Random.Range(0, malePainSfxs.Count)];
         audioSource.PlayOneShot(chosenSfx);
     }
+
+    
+
 
     public void SetMute(bool value)
     {

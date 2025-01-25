@@ -1,6 +1,8 @@
 using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
+using DG;
+using DG.Tweening;
 
 
 namespace Bubble
@@ -27,7 +29,13 @@ namespace Bubble
         [SerializeField] private float _sliderBackgroundValue;
         [SerializeField] private Slider _sliderBackground;
 
-        [Header("Mechanic")]
+
+        [Header("Bubble Configuration")]
+        [SerializeField] private Transform _bubbleObject;
+        [SerializeField] private float _speedBubbleValue;
+        [SerializeField] private float _currentBubbleValue;
+
+        [Header("Mechanic Settings")]
         [SerializeField] private float startClickArea;
         [SerializeField] private float endClickArea;
         [SerializeField] private int _defaultPassChange = 2;
@@ -40,6 +48,7 @@ namespace Bubble
         public float sliderSpeed = 100f;
         public float moveMultipiler = 1f;
         public float gravityForce = -0.1f;
+        public float scaleValue = 1;
         [SerializeField] private PlayerBubbleLevel[] _playerBubbleLevel;
 
         private Coroutine sliderCoroutine;
@@ -114,6 +123,7 @@ namespace Bubble
                 if (leftHoldDuration >= 2)
                 {
                     MovePlayer(leftHoldDuration, false);
+                    leftHoldDuration = 0;
                 }
 
                 yield return null;
@@ -133,8 +143,8 @@ namespace Bubble
             if (rightHoldCoroutine != null)
             {
                 MovePlayer(rightHoldDuration, true);
-                Debug.Log("Right button held for: " + rightHoldDuration.ToString("F2") + " seconds");
                 rightHoldDuration = 0;
+                Debug.Log("Right button held for: " + rightHoldDuration.ToString("F2") + " seconds");
                 rightHoldCoroutine = null;
             }
         }
@@ -149,6 +159,7 @@ namespace Bubble
                 if (rightHoldDuration >= 2)
                 {
                     MovePlayer(rightHoldDuration, true);
+                    rightHoldDuration = 0;
                 }
                 yield return null;
             }
@@ -157,20 +168,26 @@ namespace Bubble
         private void MovePlayer(float holdValue, bool isRight)
         {
             float moveValue = holdValue * moveMultipiler;
-            Vector2 forceDirection = isRight ? Vector2.right : Vector2.left;
+            Vector2 forceDirection = isRight ? Vector2.left : Vector2.right;
 
             _PlayerRb.AddForce(forceDirection * moveValue, ForceMode2D.Impulse);
             Debug.Log("Force applied: " + moveValue.ToString("F2") + " to " + (isRight ? "Right" : "Left"));
 
             if (isRight)
             {
-                StopCoroutine(rightHoldCoroutine);
-                rightHoldCoroutine = null;
+                if(rightHoldCoroutine != null)
+                {
+                    StopCoroutine(rightHoldCoroutine);
+                    rightHoldCoroutine = null;
+                }
             }
             else
             {
-                StopCoroutine(leftHoldCoroutine);
-                leftHoldCoroutine = null;
+                if(leftHoldCoroutine != null)
+                {
+                    StopCoroutine(leftHoldCoroutine);
+                    leftHoldCoroutine = null;
+                }
             }
         }
 
@@ -194,6 +211,7 @@ namespace Bubble
                 _passChange = _defaultPassChange + 1; ;
                 isFlying = true;
                 _currentLevelBubble = 0;
+                _currentBubbleValue = passValue;
                 isGroundedLeft = false;
                 isGroundedRight = false;
                 SetLevelBubble();
@@ -286,7 +304,10 @@ namespace Bubble
                 _passChange = _defaultPassChange;
                 passValue++;
 
-                if(passValue > _passRequiriment)
+                _currentBubbleValue += _speedBubbleValue;
+                ApplyBubbleValue();
+
+                if (passValue > _passRequiriment)
                 {
                     _currentLevelBubble++;
                     SetLevelBubble();
@@ -305,6 +326,11 @@ namespace Bubble
             _PlayerRb.gravityScale += gravityForce;
         }
 
+        private void ApplyBubbleValue()
+        {
+            _bubbleObject.DOScale(_currentBubbleValue, 0.3f);
+        }
+
         private void BubbleBroken()
         {
             if (sliderCoroutine != null)
@@ -313,6 +339,8 @@ namespace Bubble
                 sliderCoroutine = null;
             }
 
+            _currentBubbleValue = 0;
+            ApplyBubbleValue();
 
             _PlayerRb.gravityScale = 1;
             Debug.Log("Buuble Broken");

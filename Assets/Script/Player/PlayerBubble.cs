@@ -12,6 +12,8 @@ namespace Bubble
     {
         [Header("Component")]
         [SerializeField] private PlayerCamera _playerCamera;
+        [SerializeField] private GameObject _sliderGameobject;
+
 
         [Header("Bubble Configuration")]
         [SerializeField] private Transform _bubbleObject;
@@ -21,6 +23,17 @@ namespace Bubble
         [Header("Animation Broken")]
         public GameObject vfxBrokenGameobject;
 
+        [SerializeField]
+        private float scaleUpFactor = 1.2f; // The factor to scale up by
+        [SerializeField]
+        private float animationDuration = 0.5f; // Duration of the scaling animation
+
+        private Vector3 originalScale; // To store the original scale
+
+        private void Awake()
+        {
+            originalScale = _sliderGameobject.transform.localScale;
+        }
         public void StartAnimation()
         {
             _bubbleObject.gameObject.SetActive(true);
@@ -39,6 +52,8 @@ namespace Bubble
             _currentBubbleValue += _speedBubbleValue;
             UpdateBubbleValue();
             _playerCamera.ZoomIn();
+            ScaleUp();
+
         }
 
         private void UpdateBubbleValue()
@@ -55,6 +70,17 @@ namespace Bubble
             _currentBubbleValue = 0;
             UpdateBubbleValue();
             _bubbleObject.gameObject.SetActive(false);
+        }
+
+        void ScaleUp()
+        {
+            // Reset to the original scale
+            _sliderGameobject.transform.localScale = originalScale;
+
+            // Scale up and then back to the original size
+            _sliderGameobject.transform.DOScale(originalScale * scaleUpFactor, animationDuration / 2)
+                     .OnComplete(() =>
+                         _sliderGameobject.transform.DOScale(originalScale, animationDuration / 2));
         }
     }
 }

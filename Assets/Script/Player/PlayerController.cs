@@ -61,6 +61,8 @@ namespace Bubble
         public bool isPlunging;
         private Coroutine _groundCheckerCoroutine;
 
+        public bool isreversed = false;
+
         private void Awake()
         {
             _playerInputs = new PlayerInputs();
@@ -170,6 +172,15 @@ namespace Bubble
             float moveValue = holdValue * moveMultipiler;
             Vector2 forceDirection = isRight ? Vector2.left : Vector2.right;
 
+            if (!isreversed)
+            {
+                forceDirection = isRight ? Vector2.left : Vector2.right;
+            }
+            else
+            {
+                forceDirection = isRight ? Vector2.right : Vector2.left;
+            }
+
             _PlayerRb.AddForce(forceDirection * moveValue, ForceMode2D.Impulse);
             Debug.Log("Force applied: " + moveValue.ToString("F2") + " to " + (isRight ? "Right" : "Left"));
 
@@ -188,6 +199,14 @@ namespace Bubble
                     StopCoroutine(leftHoldCoroutine);
                     leftHoldCoroutine = null;
                 }
+            }
+        }
+
+        private void Update()
+        {
+            if (Input.GetKeyDown(KeyCode.R))
+            {
+                isreversed = !isreversed;   
             }
         }
 

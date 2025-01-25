@@ -11,6 +11,7 @@ public class PlayerCamera : MonoBehaviour
 
     private void Start()
     {
+        defaultSize = virtualCamera.Lens.OrthographicSize;
     }
 
     public void ZoomIn()
@@ -24,7 +25,7 @@ public class PlayerCamera : MonoBehaviour
     public void ZoomOut()
     {
         StopAllCoroutines();
-        StartCoroutine(SmoothZoom(defaultSize));
+        StartCoroutine(SmoothZoomOut());
     }
 
     private IEnumerator SmoothZoom(float target)
@@ -35,6 +36,16 @@ public class PlayerCamera : MonoBehaviour
         {
             virtualCamera.Lens.OrthographicSize = Mathf.Lerp(startSize, target, elapsedTime / zoomSpeed);
             elapsedTime += Time.deltaTime;
+            yield return null;
+        }
+    }
+
+    private IEnumerator SmoothZoomOut()
+    {
+        float startSize = virtualCamera.Lens.OrthographicSize;
+        while (virtualCamera.Lens.OrthographicSize > defaultSize)
+        {
+            virtualCamera.Lens.OrthographicSize -= Time.deltaTime * zoomSpeed;
             yield return null;
         }
     }

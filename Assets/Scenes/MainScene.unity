@@ -454,11 +454,11 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 5944149832827063497, guid: 2fd2fd2db690d0d4b8e7bacb487dc352, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0.99
+      value: -3.43
       objectReference: {fileID: 0}
     - target: {fileID: 5944149832827063497, guid: 2fd2fd2db690d0d4b8e7bacb487dc352, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -4.56
+      value: 1.71
       objectReference: {fileID: 0}
     - target: {fileID: 5944149832827063497, guid: 2fd2fd2db690d0d4b8e7bacb487dc352, type: 3}
       propertyPath: m_LocalPosition.z
@@ -1235,7 +1235,7 @@ MonoBehaviour:
     CustomLookAtTarget: 0
   Lens:
     FieldOfView: 60.5
-    OrthographicSize: 6.3
+    OrthographicSize: 3
     NearClipPlane: 0.1
     FarClipPlane: 5000
     Dutch: 0
@@ -1262,7 +1262,7 @@ Transform:
   m_GameObject: {fileID: 438577177}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: -0.000000028055869, z: 1.7548273e-17, w: 1}
-  m_LocalPosition: {x: -0.07, y: 0.69000006, z: -10}
+  m_LocalPosition: {x: -0.07, y: -1.85, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1752,7 +1752,7 @@ Transform:
   m_GameObject: {fileID: 1077637045}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 3.4, z: 0}
+  m_LocalPosition: {x: 0, y: 0.86, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -2110,7 +2110,7 @@ Camera:
   far clip plane: 5000
   field of view: 60.5
   orthographic: 1
-  orthographic size: 6.3
+  orthographic size: 3
   m_Depth: 0
   m_CullingMask:
     serializedVersion: 2
@@ -2167,7 +2167,7 @@ Transform:
   m_GameObject: {fileID: 1529208958}
   serializedVersion: 2
   m_LocalRotation: {x: 4.9233204e-25, y: -0.000000028055869, z: 1.3812804e-32, w: 1}
-  m_LocalPosition: {x: -0.07, y: 0.69000006, z: -10}
+  m_LocalPosition: {x: -0.07, y: -1.85, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -3114,6 +3114,7 @@ MonoBehaviour:
   isGroundedLeft: 1
   isGroundedRight: 1
   isPlunging: 0
+  isreversed: 0
 --- !u!212 &2143611452
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -3158,7 +3159,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 1
-  m_Sprite: {fileID: -2413806693520163455, guid: a86470a33a6bf42c4b3595704624658b, type: 3}
+  m_Sprite: {fileID: 2285211642361131573, guid: e856e5d9710bd3743ae7488e3ce58383, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0

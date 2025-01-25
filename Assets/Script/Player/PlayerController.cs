@@ -22,18 +22,17 @@ namespace Bubble
 
         [Header("Component")]
         [SerializeField] private Rigidbody2D _PlayerRb;
+        [SerializeField] private PlayerBubble _playerBubble;
 
         [Header("Slider Mechanic")]
         [SerializeField] private GameObject _sliderPanel;
         [SerializeField] private Slider _sliderIndicator;  // Referensi ke _sliderIndicator di UI
         [SerializeField] private float _sliderBackgroundValue;
-        [SerializeField] private Slider _sliderBackground;
+        [SerializeField] private RectTransform _areaClick;
 
-
-        [Header("Bubble Configuration")]
-        [SerializeField] private Transform _bubbleObject;
-        [SerializeField] private float _speedBubbleValue;
-        [SerializeField] private float _currentBubbleValue;
+        [SerializeField] private RectTransform _indicatorImg;
+        [SerializeField] private Image _barImage;
+        [SerializeField] private float _offsetBar = 7f;
 
         [Header("Mechanic Settings")]
         [SerializeField] private float startClickArea;
@@ -48,7 +47,6 @@ namespace Bubble
         public float sliderSpeed = 100f;
         public float moveMultipiler = 1f;
         public float gravityForce = -0.1f;
-        public float scaleValue = 1;
         [SerializeField] private PlayerBubbleLevel[] _playerBubbleLevel;
 
         private Coroutine sliderCoroutine;
@@ -95,6 +93,8 @@ namespace Bubble
             _playerInputs.Disable();
         }
 
+
+        #region Movement
         private void StartLeftHold()
         {
             if (leftHoldCoroutine == null)
@@ -120,7 +120,7 @@ namespace Bubble
             {
                 leftHoldDuration += Time.deltaTime;
 
-                if (leftHoldDuration >= 2)
+                if (leftHoldDuration >= 0.5f)
                 {
                     MovePlayer(leftHoldDuration, false);
                     leftHoldDuration = 0;
@@ -156,7 +156,7 @@ namespace Bubble
             {
                 rightHoldDuration += Time.deltaTime;
 
-                if (rightHoldDuration >= 2)
+                if (rightHoldDuration >= 0.5f)
                 {
                     MovePlayer(rightHoldDuration, true);
                     rightHoldDuration = 0;
@@ -175,7 +175,7 @@ namespace Bubble
 
             if (isRight)
             {
-                if(rightHoldCoroutine != null)
+                if (rightHoldCoroutine != null)
                 {
                     StopCoroutine(rightHoldCoroutine);
                     rightHoldCoroutine = null;
@@ -183,13 +183,15 @@ namespace Bubble
             }
             else
             {
-                if(leftHoldCoroutine != null)
+                if (leftHoldCoroutine != null)
                 {
                     StopCoroutine(leftHoldCoroutine);
                     leftHoldCoroutine = null;
                 }
             }
         }
+
+        #endregion
 
         #region Mouse Action
 
@@ -201,21 +203,19 @@ namespace Bubble
                     return;
 
                 ChekingClicker();
-                Debug.Log("Cheking");
             }
             else
             {
-                Debug.Log("Blowing");
                 _PlayerRb.gravityScale = 0;
                 passValue = 0;
                 _passChange = _defaultPassChange + 1; ;
                 isFlying = true;
                 _currentLevelBubble = 0;
-                _currentBubbleValue = passValue;
                 isGroundedLeft = false;
                 isGroundedRight = false;
                 SetLevelBubble();
 
+                _playerBubble.StartAnimation();
                 SetSliderBackground();
                 StartSliderMovement();
             }
@@ -231,8 +231,12 @@ namespace Bubble
         private void SetSliderBackground()
         {
             _sliderBackgroundValue = Random.Range(10f, 90f);
+            float normalizedFill = Mathf.Clamp(_sliderBackgroundValue / 100f, 0f, 1f);
 
-            _sliderBackground.value = _sliderBackgroundValue;
+            float rotationZ = Mathf.Lerp(0f, 360f, normalizedFill);
+            Debug.Log("rotationZ : " + rotationZ);
+
+            _areaClick.localEulerAngles = new Vector3(0, 0, -rotationZ);
         }
 
         public void StartSliderMovement()
@@ -260,9 +264,11 @@ namespace Bubble
                 if (isIncreasing)
                 {
                     _sliderIndicator.value += sliderSpeed * Time.deltaTime;
+                    UpdateIndicatorValue();
                     if (_sliderIndicator.value >= _sliderIndicator.maxValue)
                     {
                         _sliderIndicator.value = _sliderIndicator.maxValue;
+                        _sliderIndicator.value = 0;
 
                         _passChange--;
 
@@ -270,25 +276,6 @@ namespace Bubble
                         {
                             BubbleBroken();
                         }
-
-                        isIncreasing = false;
-                    }
-                }
-                else
-                {
-                    _sliderIndicator.value -= sliderSpeed * Time.deltaTime;
-                    if (_sliderIndicator.value <= _sliderIndicator.minValue)
-                    {
-                        _sliderIndicator.value = _sliderIndicator.minValue;
-
-                        _passChange--;
-
-                        if (_passChange <= 0)
-                        {
-                            BubbleBroken();
-                        }
-
-                        isIncreasing = true;
                     }
                 }
 
@@ -296,16 +283,22 @@ namespace Bubble
             }
         }
 
+        private void UpdateIndicatorValue()
+        {
+            float buttonAngle = _barImage.fillAmount * 360;
+            _indicatorImg.localEulerAngles = new Vector3(0, 0, -buttonAngle); 
+        }
+
         private void ChekingClicker()
         {
             if(_sliderIndicator.value >= _sliderBackgroundValue - 10 && _sliderIndicator.value <= _sliderBackgroundValue + 10)
             {
-                Debug.Log("Passed");
                 _passChange = _defaultPassChange;
                 passValue++;
 
-                _currentBubbleValue += _speedBubbleValue;
-                ApplyBubbleValue();
+                SetSliderBackground();
+
+                _playerBubble.AddBubbleValue();
 
                 if (passValue > _passRequiriment)
                 {
@@ -326,11 +319,6 @@ namespace Bubble
             _PlayerRb.gravityScale += gravityForce;
         }
 
-        private void ApplyBubbleValue()
-        {
-            _bubbleObject.DOScale(_currentBubbleValue, 0.3f);
-        }
-
         private void BubbleBroken()
         {
             if (sliderCoroutine != null)
@@ -339,8 +327,7 @@ namespace Bubble
                 sliderCoroutine = null;
             }
 
-            _currentBubbleValue = 0;
-            ApplyBubbleValue();
+            _playerBubble.StopAnimation();
 
             _PlayerRb.gravityScale = 1;
             Debug.Log("Buuble Broken");

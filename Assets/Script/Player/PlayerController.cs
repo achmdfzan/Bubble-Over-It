@@ -23,6 +23,7 @@ namespace Bubble
         [Header("Component")]
         [SerializeField] private Rigidbody2D _PlayerRb;
         [SerializeField] private PlayerBubble _playerBubble;
+        [SerializeField] private PlayerCamera _playerCamera;
 
         [Header("Slider Mechanic")]
         [SerializeField] private GameObject _sliderPanel;
@@ -42,6 +43,8 @@ namespace Bubble
         [SerializeField] private int passValue;
         private int _passRequiriment;
         [SerializeField] private int _currentLevelBubble = 0;
+        public float inAirTime = 0;
+        private Tween _applyGravityTween;
 
         [Header("Settings")]
         public float sliderSpeed = 100f;
@@ -338,7 +341,7 @@ namespace Bubble
             _PlayerRb.gravityScale += gravityForce;
         }
 
-        private void BubbleBroken()
+        public void BubbleBroken()
         {
             if (sliderCoroutine != null)
             {
@@ -348,8 +351,12 @@ namespace Bubble
 
             _playerBubble.StopAnimation();
 
-            _PlayerRb.gravityScale = 1;
-            Debug.Log("Buuble Broken");
+            _applyGravityTween = DOTween.To(
+                   () => _PlayerRb.gravityScale,    // Nilai awal (getter)
+                   x => _PlayerRb.gravityScale = x, // Setter untuk mengubah nilai
+                   1,                   // Nilai target
+                   1f                        
+               ).SetEase(Ease.InOutQuad);         
             _sliderPanel.SetActive(false);
 
             _groundCheckerCoroutine = StartCoroutine(IECheckGround());
@@ -357,10 +364,13 @@ namespace Bubble
 
         private IEnumerator IECheckGround()
         {
+            inAirTime = 0;
             isPlunging = true;
             while (true)
             {
                 CheckGround();
+
+                inAirTime += Time.deltaTime;
                 yield return null;
             }
         }
@@ -381,12 +391,16 @@ namespace Bubble
 
             if (isGroundedLeft || isGroundedRight)
             {
-                if(_groundCheckerCoroutine != null)
+                if (_groundCheckerCoroutine != null)
                 {
                     isPlunging = false;
                     StopCoroutine(_groundCheckerCoroutine);
                     _groundCheckerCoroutine = null;
                     isFlying = false;
+
+                    _playerCamera.HasGrounded();
+
+                    _applyGravityTween.Kill();
                 }
             }
         }

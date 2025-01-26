@@ -46,7 +46,7 @@ public class SfxManager : Singleton<SfxManager>
 
     public void PlayRocketExhaustSFX()
     {
-        //audioSource.PlayOneShot(rocketExhaustSfx);
+        audioSource.PlayOneShot(rocketExhaustSfx);
     }
 
 

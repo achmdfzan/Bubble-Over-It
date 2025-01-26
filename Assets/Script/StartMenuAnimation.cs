@@ -23,6 +23,11 @@ public class StartMenuAnimation : MonoBehaviour
         }
     }
 
+    private void Start()
+    {
+        BgmManager.Instance().PlayMenuBGM();
+    }
+
     public void AnimateStartCanvas()
     {
         if (canvasGroup == null) return;

@@ -1,3 +1,4 @@
+using Bubble;
 using DG.Tweening;
 using System.Collections;
 using System.Collections.Generic;
@@ -7,11 +8,14 @@ using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
 {
+    [SerializeField] private PlayerController _playerController;
     [SerializeField] private Transform _playerTransform;
     [SerializeField] private TextMeshProUGUI _textHeight;
     private int _currentHeight;
     [SerializeField] private int _currentLevel = 1;
-    [SerializeField] private List<Stage> _listStage; 
+    [SerializeField] private List<Stage> _listStage;
+    [SerializeField] private float _endGameHeight = 117f;
+    private bool isEndGame = false;
     private void Update()
     {
         SetHeight();
@@ -39,6 +43,13 @@ public class GameManager : MonoBehaviour
         {
             _currentLevel--;
             ChangeBackground(false);
+        }
+
+
+        if(_currentHeight >= _endGameHeight && !isEndGame)
+        {
+            isEndGame = true;
+            _playerController.SetEndGame();
         }
     }
 

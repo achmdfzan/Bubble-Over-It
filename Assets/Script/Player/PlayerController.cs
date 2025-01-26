@@ -3,6 +3,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using DG;
 using DG.Tweening;
+using Unity.VisualScripting;
 
 
 namespace Bubble
@@ -14,6 +15,7 @@ namespace Bubble
         [Header("Flags")]
         public bool isMovement = false;
         public bool isFlying = false;
+        public bool isEndGame = false;
 
         private Coroutine leftHoldCoroutine;
         private Coroutine rightHoldCoroutine;
@@ -27,12 +29,14 @@ namespace Bubble
         [SerializeField] private PlayerBubble _playerBubble;
         [SerializeField] private PlayerCamera _playerCamera;
         [SerializeField] private Transform _playerSprite;
+        public CinemachineTargetController cinemachineTargetController;
 
         [Header("Slider Mechanic")]
         [SerializeField] private GameObject _sliderPanel;
         [SerializeField] private Slider _sliderIndicator;  // Referensi ke _sliderIndicator di UI
         [SerializeField] private float _sliderBackgroundValue;
         [SerializeField] private RectTransform _areaClick;
+        [SerializeField] private Image _sliderBackground;
 
         [SerializeField] private RectTransform _indicatorImg;
         [SerializeField] private Image _barImage;
@@ -59,9 +63,9 @@ namespace Bubble
         private bool isIncreasing = true;
 
         [Header("Raycast Settings")]
-        public float rayDistance = 2f; 
-        public LayerMask groundLayer;   
-        public float rayOffset = 1f;    
+        public float rayDistance = 2f;
+        public LayerMask groundLayer;
+        public float rayOffset = 1f;
         public bool isGroundedLeft;
         public bool isGroundedRight;
         public bool isPlunging;
@@ -166,7 +170,7 @@ namespace Bubble
                 SfxManager.Instance().PlayRocketExhaustSFX();
             }
         }
-        
+
 
         private IEnumerator HoldRightButton()
         {
@@ -220,13 +224,6 @@ namespace Bubble
             }
         }
 
-        private void Update()
-        {
-            if (Input.GetKeyDown(KeyCode.R))
-            {
-                isreversed = !isreversed;   
-            }
-        }
 
         #endregion
 
@@ -236,7 +233,7 @@ namespace Bubble
         {
             if (isFlying)
             {
-                if(isPlunging)
+                if (isPlunging)
                     return;
 
 
@@ -304,6 +301,9 @@ namespace Bubble
                 {
                     _sliderIndicator.value += sliderSpeed * Time.deltaTime;
                     UpdateIndicatorValue();
+
+
+
                     if (_sliderIndicator.value >= _sliderIndicator.maxValue)
                     {
                         _sliderIndicator.value = _sliderIndicator.maxValue;
@@ -311,9 +311,13 @@ namespace Bubble
 
                         _passChange--;
 
-                        if(_passChange <= 0)
+                        if (_passChange <= 0)
                         {
-                            BubbleBroken();
+                            if (!isEndGame)
+                            {
+                                BubbleBroken();
+                            }
+
                         }
                     }
                 }
@@ -325,22 +329,36 @@ namespace Bubble
         private void UpdateIndicatorValue()
         {
             float buttonAngle = _barImage.fillAmount * 360;
-            _indicatorImg.localEulerAngles = new Vector3(0, 0, -buttonAngle); 
+            _indicatorImg.localEulerAngles = new Vector3(0, 0, -buttonAngle);
         }
 
         private void ChekingClicker()
         {
-            if(_sliderIndicator.value >= _sliderBackgroundValue - 10 && _sliderIndicator.value <= _sliderBackgroundValue + 10)
+            if (isEndGame)
             {
+                _passChange = _defaultPassChange;
+                passValue++;
 
-                if(passValue == 0)
+                SfxManager.Instance().PlayBubbleBlowSFX();
+
+                _playerBubble.AddBubbleValue();
+                _currentLevelBubble++;
+
+                return;
+            }
+
+
+            if (_sliderIndicator.value >= _sliderBackgroundValue - 10 && _sliderIndicator.value <= _sliderBackgroundValue + 10)
+            {
+                _passChange = _defaultPassChange;
+                passValue++;
+
+                if (passValue <= 1)
                 {
                     _PlayerRb.gravityScale = 0;
                 }
                 SfxManager.Instance().PlayBubbleBlowSFX();
 
-                _passChange = _defaultPassChange;
-                passValue++;
 
                 SetSliderBackground();
 
@@ -373,31 +391,41 @@ namespace Bubble
                 sliderCoroutine = null;
             }
 
-            _playerBubble.StopAnimation();
-
             _applyGravityTween = DOTween.To(
                    () => _PlayerRb.gravityScale,    // Nilai awal (getter)
                    x => _PlayerRb.gravityScale = x, // Setter untuk mengubah nilai
                    1,                   // Nilai target
-                   1f                        
-               ).SetEase(Ease.InOutQuad);         
+                   1f
+               ).SetEase(Ease.InOutQuad);
             _sliderPanel.SetActive(false);
 
-            _groundCheckerCoroutine = StartCoroutine(IECheckGround());
+            _playerBubble.StopAnimation();
+
+            inAirTime = 0;
+
+            isPlunging = true;
+
+            if (passValue > 0)
+            {
+                SfxManager.Instance().PlayBubblePopSFX();
+            }
         }
 
-        private IEnumerator IECheckGround()
+        private void Update()
         {
-            inAirTime = 0;
-            isPlunging = true;
-            while (true)
+            if (isGroundedLeft || isGroundedRight)
+            {
+                cinemachineTargetController.MoveToTop();
+            }
+
+            if (isPlunging)
             {
                 CheckGround();
 
                 inAirTime += Time.deltaTime;
-                yield return null;
             }
         }
+
 
 
         private void CheckGround()
@@ -413,21 +441,46 @@ namespace Bubble
             Debug.DrawRay(leftOrigin, Vector2.down * rayDistance, isGroundedLeft ? Color.green : Color.red);
             Debug.DrawRay(rightOrigin, Vector2.down * rayDistance, isGroundedRight ? Color.green : Color.red);
 
+            if (inAirTime > 0.2f)
+            {
+                cinemachineTargetController.MoveToBottom();
+            }
+
             if (isGroundedLeft || isGroundedRight)
             {
-                if (_groundCheckerCoroutine != null)
+                isPlunging = false;
+                _groundCheckerCoroutine = null;
+                isFlying = false;
+
+                _playerCamera.HasGrounded();
+
+                _applyGravityTween.Kill();
+
+
+                cinemachineTargetController.MoveToTop();
+
+                if (inAirTime < 0.2f)
                 {
-                    isPlunging = false;
-                    StopCoroutine(_groundCheckerCoroutine);
-                    _groundCheckerCoroutine = null;
-                    isFlying = false;
 
-                    _playerCamera.HasGrounded();
-
-                    _applyGravityTween.Kill();
+                }
+                else
+                {
                     SfxManager.Instance().PlayFallSFX();
                 }
             }
+        }
+
+        public void SetEndGame()
+        {
+            _PlayerRb.gravityScale = 0f;
+            _PlayerRb.linearVelocity = new Vector2(0, 2f);
+            isEndGame = true;
+            _sliderBackground.color = Color.green;
+
+            //_playerCamera.ChangeTargetedEndGame();
+            cinemachineTargetController.MoveToEndGame();
+            BgmManager.Instance().PlayEndingBGM();
+            _playerBubble._speedBubbleValue = 10f;
         }
 
         #endregion

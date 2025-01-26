@@ -13,11 +13,12 @@ namespace Bubble
         [Header("Component")]
         [SerializeField] private PlayerCamera _playerCamera;
         [SerializeField] private GameObject _sliderGameobject;
+        [SerializeField] private CanvasGroup _canvasEndGame;
 
 
         [Header("Bubble Configuration")]
         [SerializeField] private Transform _bubbleObject;
-        [SerializeField] private float _speedBubbleValue;
+        [SerializeField] public float _speedBubbleValue;
         [SerializeField] private float _currentBubbleValue;
 
         [Header("Animation Broken")]
@@ -44,17 +45,21 @@ namespace Bubble
         public void StopAnimation()
         {
             AnimateBroken();
-            _playerCamera.ZoomOut();
-            SfxManager.Instance().PlayBubblePopSFX();
+            _playerCamera.ZoomInCamera();
         }
 
         public void AddBubbleValue()
         {
             _currentBubbleValue += _speedBubbleValue;
             UpdateBubbleValue();
-            _playerCamera.ZoomIn();
+            _playerCamera.ZoomOutCamera();
             ScaleUp();
 
+
+            if(_currentBubbleValue >= 250)
+            {
+                _canvasEndGame.DOFade(0.96f, 5f);
+            }
         }
 
         private void UpdateBubbleValue()

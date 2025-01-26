@@ -12,6 +12,7 @@ public class PlayerCamera : MonoBehaviour
     public float zoomSize = 2f;
     private float defaultSize = 6.3f;
     [SerializeField] private Transform _targetedTransform;
+    [SerializeField] private Transform _endGameTargetTransform;
     private float _defaultTargetTransform;
     [SerializeField] private float _takeDownTargetTransform;
     public float rayDistance;
@@ -28,17 +29,18 @@ public class PlayerCamera : MonoBehaviour
         _defaultTargetTransform = _targetedTransform.localPosition.y;
     }
 
-    public void ZoomIn()
+    public void ZoomOutCamera()
     {
         StopAllCoroutines();
 
         _isFlying = true;
 
         float amount = virtualCamera.Lens.OrthographicSize + zoomSize;
+        amount = Mathf.Clamp(amount, 0, 10);
         StartCoroutine(SmoothZoom(amount));
     }
 
-    public void ZoomOut()
+    public void ZoomInCamera()
     {
         StopAllCoroutines();
         StartCoroutine(SmoothZoomOut());
@@ -89,6 +91,7 @@ public class PlayerCamera : MonoBehaviour
 
     public void HasGrounded()
     {
+
         if(_takeDownTween != null)
         {
             _takeDownTween.Kill();
@@ -106,5 +109,10 @@ public class PlayerCamera : MonoBehaviour
         //}
         _isFlying = false;
         _hasTakeDown = false;
+    }
+
+    public void ChangeTargetedEndGame()
+    {
+        virtualCamera.LookAt = _endGameTargetTransform;
     }
 }
